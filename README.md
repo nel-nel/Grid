@@ -16,22 +16,22 @@ There is no need to read/write to the console.
 The design of the code is up to you. But you need to have an entry point that will receive the commands. How you initialize the state of the code is again up to you.
 Write specs, again up to you how many and what kind.
 
-Specifications
+# Specifications
 
-1.Just run the main class and you will see the results from the unit tests. There is no input from console, so I haven't validated the input, only the results. Every case is inilialized as an object of the class Bot with parameters: coordinates and direction, moves and obstacles' coordinates. 
-2.The grid wraps around when the rover riches the end. The Grid is 10x10 with 0,0 start.
+1. Just run the main class and you will see the results from the unit tests. There is no input from console, so I haven't validated the input, only the results. Every case is inilialized as an object of the class Bot with parameters: coordinates and direction, moves and obstacles' coordinates. 
+2. The grid wraps around when the rover riches the end. The Grid is 10x10 with 0,0 start.
 
 The unit tests are: 
-1.Basic
+#### 1.Basic
  [0,0,'N'],['R','M','M','L','M'],[[7,5]] -->[3,2]
  
-2.Obstacles
+#### 2.Obstacles
 [3,3,'N'],['L','M','R'],[] -->[1,4]
 
-3.Wraps around
+#### 3.Wraps around
 [0,0,'N'],['R','L','L','M','L'],[[7,5]] -->[9,0]
 
-4.Wraps Arround And Obstacle   
+#### 4.Wraps Arround And Obstacle   
 [0,0,'N'],['R','L','L','M','L'],[[7,5],[9,1]] --> [0,0,1]
 
 
