@@ -17,6 +17,7 @@ The design of the code is up to you. But you need to have an entry point that wi
 Write specs, again up to you how many and what kind.
 
 Specifications
+
 1.Just run the main class and you will see the results from the unit tests. There is no input from console, so I haven't validated the input, only the results. Every case is inilialized as an object of the class Bot with parameters: coordinates and direction, moves and obstacles' parameters. 
 2.The grid wraps around when the rover riches the end. The Grid is 10x10 with 0,0 start.
 
