@@ -4,7 +4,8 @@
 class Bot
   #constuctor 
   attr_accessor :coordinates, :moves, :direction
-  def initialize (coordinates,moves,obstacles)
+    
+  def initialize (coordinates, moves, obstacles)
     @obstacles =obstacles 
     @x = coordinates[0]
     @y = coordinates[1]
@@ -13,14 +14,14 @@ class Bot
     @direction = coordinates[2] 
     @moves = moves
   end
-  def calculatePosition()
+    
+  def calculate_position()
     for move in @moves
-      puts @x.to_s
-      self.changeDirection(move)
-      self.changePosition()
+      self.change_direction(move)
+      self.change_position()
       #check for grid end 
-      checkPoint() 
-      if(self.noObstacles()==false)      
+      check_point() 
+      if self.no_obstacles() == false      
         return [0,@x,@y]
         #break
       else
@@ -29,8 +30,9 @@ class Bot
       end #if 
     end #for
     return [@xtest,@ytest]
-  end #calculatePosition
-  def changeDirection(move)    
+  end #calculate_position
+    
+  def change_direction(move)    
     case move 
     when 'R'
       case @direction
@@ -59,7 +61,7 @@ class Bot
       #don't change @direction in that case
     end
   end 
-  def changePosition()
+  def change_position()
     case @direction
     when 'N'
       @ytest += 1                    
@@ -69,36 +71,35 @@ class Bot
       @xtest += 1          
     when 'W'
       @xtest -= 1
-    end #case
-   
-  end #changePosition()
+    end #case   
+  end #change_position()
 
-  def checkPoint()
+  def check_point()
     #check for the ends of the grid
-    if(@xtest<0) && (@direction=='W')
-      @xtest=9      
-    elsif(@xtest>10) && (@direction =='E')
+    if @xtest < 0  &&  @direction == 'W' 
+      @xtest = 9      
+    elsif @xtest > 10  &&  @direction == 'E' 
       @xtest=1      
-    elsif(@ytest<0) && (@direction == 'S')  
-      @ytest=9      
-    elsif(@ytest>10) && (@direction == 'N')
+    elsif @ytest < 0  &&  @direction == 'S'   
+      @ytest = 9      
+    elsif @ytest > 10  &&  @direction == 'N' 
       @ytest=1      
     else
       return true
     end #if
-  end #checkPoint
+  end #check_point
 
-  def noObstacles()
-    noObstacles = true
+  def no_obstacles()
+    no_obstacles = true
     for obstacle in @obstacles
-      if (obstacle[0]==@xtest) && (obstacle[1]==@ytest)
-        noObstacles = false
+      if obstacle[0] == @xtest && obstacle[1] == @ytest
+        no_obstacles = false
         break 
       else
-        noObstacles = true 
+        no_obstacles = true 
       end #if  
     end #for
-    return noObstacles
-  end #end of noObstacles()
+    return no_obstacles
+  end #end of no_obstacles()
 
 end #end of class
