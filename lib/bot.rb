@@ -4,9 +4,9 @@
 class Bot
   #constuctor 
   attr_accessor :coordinates, :moves, :direction
-    
+  
   def initialize (coordinates, moves, obstacles)
-    @obstacles =obstacles 
+    @obstacles = obstacles 
     @x = coordinates[0]
     @y = coordinates[1]
     @xtest = coordinates[0]
@@ -18,18 +18,20 @@ class Bot
   def calculate_position()
     for move in @moves
       self.change_direction(move)
-      self.change_position()
+      if move == 'M'
+      	self.change_position()
+      end #if
       #check for grid end 
       check_point() 
       if self.no_obstacles() == false      
-        return [0,@x,@y]
+        return ["О",@x,@y]
         #break
       else
         @x = @xtest
         @y = @ytest      
       end #if 
     end #for
-    return [@xtest,@ytest]
+    return [@xtest, @ytest]
   end #calculate_position
     
   def change_direction(move)    
@@ -43,7 +45,7 @@ class Bot
       when 'E'
         @direction = 'S'
       when 'W'
-        @direction='N'
+        @direction = 'N'
       end       
       
     when 'L'
@@ -55,7 +57,7 @@ class Bot
       when 'E'
         @direction = 'N'          
       when 'W'
-        @direction='S'     
+        @direction = 'S'     
       end
     when 'M'
       #don't change @direction in that case
