@@ -1,6 +1,7 @@
 #The rover receives a char array of commands e.g. RMMLM and returns the finishing point after the moves e.g. 2,1,N
 
 #You are given the initial starting point (0,0,N)
+
 class Bot
   #constuctor 
   attr_accessor :coordinates, :moves, :direction
@@ -66,25 +67,33 @@ class Bot
   def change_position()
     case @direction
     when 'N'
-      @ytest += 1                    
+        if check_point(@x,@y++)
+            @y += 1
+        end
     when 'S'
-      @ytest -= 1            
+        if check_point(@x,@y--)
+            @y -= 1
+        end
     when 'E'
-      @xtest += 1          
+        if check_point(@x++,@y)
+            @xtest += 1
+        end
     when 'W'
-      @xtest -= 1
+        if check_poin(@x--,@y)    
+            @x -= 1
+        end
     end #case   
   end #change_position()
 
-  def check_point()
+  def check_point(x,y)
     #check for the ends of the grid
-    if @xtest < 0  &&  @direction == 'W' 
-      @xtest = 9      
-    elsif @xtest > 10  &&  @direction == 'E' 
-      @xtest=1      
-    elsif @ytest < 0  &&  @direction == 'S'   
-      @ytest = 9      
-    elsif @ytest > 10  &&  @direction == 'N' 
+    if x < 0  &&  @direction == 'W' 
+      @x= 9      
+    elsif x > 10  &&  @direction == 'E' 
+      @x=1      
+    elsif y < 0  &&  @direction == 'S'   
+      @y = 9      
+    elsif y > 10  &&  @direction == 'N' 
       @ytest=1      
     else
       return true

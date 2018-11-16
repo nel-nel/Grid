@@ -8,14 +8,14 @@ class TestBot < Test::Unit::TestCase
   end
 
   def test_obstacles
-    assert_equal([2,3], Bot.new([3,3,'N'],['L','M','R','М'],[[2,4]]).calculate_position(),"obstacle test failed")
+    assert_equal([2,3], Bot.new([3,3,'N'],['L','M','R','М'],[[2,4]]).calculate_position(),"Obstacle test failed")
   end 
   
   def test_wrapsArround   
-    assert_equal([9,0], Bot.new([0,0,'N'],['R','L','L','M','L'],[]).calculate_position(),"It doesn't work without obstacles")
+    assert_equal([9,0], Bot.new([0,0,'N'],['R','L','L','M','L'],[]).calculate_position(),"Wrap arround test failed")
   end
    def test_wrapsArroundAndObstacle   
-    assert_equal(["О",9,2], Bot.new([0,0,'N'],['R','L','M','M','L','M','M'],[[8,2]]).calculate_position(),"It doesn't work without obstacles")
+    assert_equal([10,8], Bot.new([6,8,'N'],['L','M','M','M','M'],[[2,8]]).calculate_position(),"Obstacle and wrap arround test failed")
   end
 end
 
