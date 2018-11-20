@@ -7,32 +7,28 @@ class Bot
   attr_accessor :coordinates, :moves, :direction
   
   def initialize (coordinates, moves, obstacles)
-    @obstacles = obstacles 
     @x = coordinates[0]
     @y = coordinates[1]
-    @xtest = coordinates[0]
-    @ytest = coordinates[1]
     @direction = coordinates[2] 
     @moves = moves
+    @obstacles = obstacles 
+    @stop = false
   end
     
   def calculate_position()
+    position = []
     for move in @moves
       self.change_direction(move)
       if move == 'M'
-      	self.change_position()
+        change_position()
+        if @stop == true
+          return ["O",@x,@y]                 
+        else
+          [@x,@y]
+        end #if    
       end #if
-      #check for grid end 
-      check_point() 
-      if self.no_obstacles() == false      
-        return ["О",@x,@y]
-        #break
-      else
-        @x = @xtest
-        @y = @ytest      
-      end #if 
     end #for
-    return [@xtest, @ytest]
+    #return position
   end #calculate_position
     
   def change_direction(move)    
@@ -59,55 +55,74 @@ class Bot
         @direction = 'N'          
       when 'W'
         @direction = 'S'     
-      end
-    when 'M'
+      when 'M'
       #don't change @direction in that case
-    end
-  end 
+      end
+    end #case
+  end #change_direction
+
   def change_position()
     case @direction
     when 'N'
-        if check_point(@x,@y++)
-            @y += 1
-        end
+      a = @x , b = @y + 1
+      self.no_obstacles(a,b)
+      if @stop == false 
+        #if obstacle, don't change position and return 
+        if self.check_point(a,b) == true
+          @y += 1
+        end #if 
+      end #if     
     when 'S'
-        if check_point(@x,@y--)
-            @y -= 1
-        end
+      a = @x , b = @y - 1
+      self.no_obstacles(a,b)
+      if @stop == false   
+        if self.check_point(a,b) == true
+          @y -= 1
+        end #if    
+      end #if   
     when 'E'
-        if check_point(@x++,@y)
-            @xtest += 1
-        end
+      a = @x + 1 , b = @y
+      self.no_obstacles(a,b)
+      if @stop == false  
+        if self.check_point(a,b) == true
+          @x += 1
+        end #if
+      end #if
     when 'W'
-        if check_poin(@x--,@y)    
-            @x -= 1
-        end
+      a = @x - 1 , b = @y
+      self.no_obstacles(a,b)
+      if @stop == false 
+        if self.check_point(a,b) == true  
+          @x -= 1
+        end #if
+      end #if  
     end #case   
   end #change_position()
 
   def check_point(x,y)
     #check for the ends of the grid
-    if x < 0  &&  @direction == 'W' 
-      @x= 9      
-    elsif x > 10  &&  @direction == 'E' 
-      @x=1      
-    elsif y < 0  &&  @direction == 'S'   
-      @y = 9      
-    elsif y > 10  &&  @direction == 'N' 
-      @ytest=1      
+    if x == -1  &&  @direction == 'W' 
+      @x = 9
+      return false      
+    elsif x == 11  &&  @direction == 'E' 
+      @x = 1  
+      return false     
+    elsif y == -1  &&  @direction == 'S'   
+      @y = 9  
+      return false     
+    elsif y == 11  &&  @direction == 'N' 
+      @y = 1     
     else
       return true
     end #if
   end #check_point
 
-  def no_obstacles()
+  def no_obstacles(a,b)
     no_obstacles = true
     for obstacle in @obstacles
-      if obstacle[0] == @xtest && obstacle[1] == @ytest
-        no_obstacles = false
-        break 
-      else
-        no_obstacles = true 
+      if @obstacles[0] == a && @obstacles[1] == b
+        @stop = true
+        no_obstacles = false        
       end #if  
     end #for
     return no_obstacles
